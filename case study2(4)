@@ -1,0 +1,103 @@
+class PrinterJobQueue:
+    def __init__(self):
+        self.queue = []
+        self.capacity = 30
+
+    # Add Print Job (Enqueue)
+    def add_job(self, job_id, file_type):
+        if len(self.queue) >= self.capacity:
+            print("Queue is full! Cannot add new print job.")
+            return
+
+        if file_type not in ["PDF", "DOCX"]:
+            print("Only PDF and DOCX files are accepted.")
+            return
+
+        # Check for duplicate Job ID
+        for job in self.queue:
+            if job["job_id"] == job_id:
+                print("Duplicate Job ID! Job cannot be added.")
+                return
+
+        job = {
+            "job_id": job_id,
+            "file_type": file_type
+        }
+
+        self.queue.append(job)
+        print("Print job added successfully.")
+
+    # Print Job (Dequeue)
+    def print_job(self):
+        if len(self.queue) == 0:
+            print("Queue is empty! No print job to process.")
+            return
+
+        job = self.queue.pop(0)
+
+        print("Printing Job:")
+        print("Job ID:", job["job_id"])
+        print("File Type:", job["file_type"])
+
+    # View Next Job
+    def view_next_job(self):
+        if len(self.queue) == 0:
+            print("Queue is empty!")
+            return
+
+        job = self.queue[0]
+
+        print("Next Print Job:")
+        print("Job ID:", job["job_id"])
+        print("File Type:", job["file_type"])
+
+    # Display Print Queue
+    def display(self):
+        if len(self.queue) == 0:
+            print("Queue is empty!")
+            return
+
+        print("\nPrint Queue:")
+
+        for i, job in enumerate(self.queue, start=1):
+            print(
+                i,
+                "-> Job ID:", job["job_id"],
+                "| File Type:", job["file_type"]
+            )
+
+
+# Main Program
+printer = PrinterJobQueue()
+
+while True:
+    print("\n--- Printer Job Queue ---")
+    print("1. Add Print Job")
+    print("2. Print Job")
+    print("3. View Next Job")
+    print("4. Display Print Queue")
+    print("5. Exit")
+
+    choice = int(input("Enter your choice: "))
+
+    if choice == 1:
+        job_id = input("Enter Job ID: ")
+        file_type = input("Enter File Type (PDF/DOCX): ").upper()
+
+        printer.add_job(job_id, file_type)
+
+    elif choice == 2:
+        printer.print_job()
+
+    elif choice == 3:
+        printer.view_next_job()
+
+    elif choice == 4:
+        printer.display()
+
+    elif choice == 5:
+        print("Program terminated.")
+        break
+
+    else:
+        print("Invalid choice!")
