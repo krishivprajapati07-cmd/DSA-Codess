@@ -1,0 +1,38 @@
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+
+# Recursive Preorder Traversal
+def preorder(root):
+    if root is not None:
+        print(root.value, end=" ")
+        preorder(root.left)
+        preorder(root.right)
+
+
+# Create Expression Tree
+#
+#          +
+#        /   \
+#       *     -
+#      / \   / \
+#     A   B C   D
+#
+
+root = Node("+")
+root.left = Node("*")
+root.right = Node("-")
+
+root.left.left = Node("A")
+root.left.right = Node("B")
+
+root.right.left = Node("C")
+root.right.right = Node("D")
+
+
+# Display Preorder Traversal
+print("Preorder Traversal:")
+preorder(root)
