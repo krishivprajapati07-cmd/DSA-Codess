@@ -1,0 +1,105 @@
+class FoodDeliveryQueue:
+    def __init__(self):
+        self.queue = []
+        self.capacity = 100
+
+    # Place Order (Enqueue)
+    def place_order(self, order_id, status):
+        # Check queue overflow
+        if len(self.queue) >= self.capacity:
+            print("Queue is full! Cannot place new order.")
+            return
+
+        # Only confirmed orders are accepted
+        if status.lower() != "confirmed":
+            print("Only confirmed orders are accepted.")
+            return
+
+        # Check duplicate Order ID
+        for order in self.queue:
+            if order["order_id"] == order_id:
+                print("Duplicate Order ID! Order cannot be added.")
+                return
+
+        order = {
+            "order_id": order_id,
+            "status": "Confirmed"
+        }
+
+        self.queue.append(order)
+        print("Order placed successfully.")
+
+    # Prepare Order (Dequeue)
+    def prepare_order(self):
+        if len(self.queue) == 0:
+            print("Queue is empty! No order to prepare.")
+            return
+
+        order = self.queue.pop(0)
+
+        print("Preparing Order:")
+        print("Order ID:", order["order_id"])
+        print("Status:", order["status"])
+
+    # View Next Order
+    def view_next_order(self):
+        if len(self.queue) == 0:
+            print("Queue is empty!")
+            return
+
+        order = self.queue[0]
+
+        print("Next Order:")
+        print("Order ID:", order["order_id"])
+        print("Status:", order["status"])
+
+    # Display Order Queue
+    def display(self):
+        if len(self.queue) == 0:
+            print("Queue is empty!")
+            return
+
+        print("\nFood Delivery Order Queue:")
+
+        for i, order in enumerate(self.queue, start=1):
+            print(
+                i,
+                "-> Order ID:", order["order_id"],
+                "| Status:", order["status"]
+            )
+
+
+# Main Program
+food_queue = FoodDeliveryQueue()
+
+while True:
+    print("\n--- Food Delivery Order Queue ---")
+    print("1. Place Order")
+    print("2. Prepare Order")
+    print("3. View Next Order")
+    print("4. Display Order Queue")
+    print("5. Exit")
+
+    choice = int(input("Enter your choice: "))
+
+    if choice == 1:
+        order_id = input("Enter Order ID: ")
+        status = input("Enter Order Status (Confirmed/Pending): ")
+
+        food_queue.place_order(order_id, status)
+
+    elif choice == 2:
+        food_queue.prepare_order()
+
+    elif choice == 3:
+        food_queue.view_next_order()
+
+    elif choice == 4:
+        food_queue.display()
+
+    elif choice == 5:
+        print("Program terminated.")
+        break
+
+    else:
+        print("Invalid choice!")
