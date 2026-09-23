@@ -1,0 +1,102 @@
+class CafeteriaPlateStack:
+    def __init__(self):
+        self.stack = []
+        self.capacity = 20
+
+    # Add Plate (Push)
+    def add_plate(self, plate_type, plate_id):
+        if len(self.stack) >= self.capacity:
+            print("Stack is full! Cannot add more plates.")
+            return
+
+        if plate_type not in ["Steel", "Ceramic"]:
+            print("Only Steel and Ceramic plates are allowed.")
+            return
+
+        # Check for duplicate Plate ID
+        for plate in self.stack:
+            if plate["plate_id"] == plate_id:
+                print("Duplicate Plate ID! Plate cannot be added.")
+                return
+
+        plate = {
+            "plate_type": plate_type,
+            "plate_id": plate_id
+        }
+
+        self.stack.append(plate)
+        print("Plate added successfully.")
+
+    # Remove Plate (Pop)
+    def remove_plate(self):
+        if len(self.stack) == 0:
+            print("Stack is empty! No plate to remove.")
+            return
+
+        plate = self.stack.pop()
+
+        print("Plate removed:")
+        print("Plate Type:", plate["plate_type"])
+        print("Plate ID:", plate["plate_id"])
+
+    # View Top Plate (Peek)
+    def view_top_plate(self):
+        if len(self.stack) == 0:
+            print("Stack is empty!")
+            return
+
+        plate = self.stack[-1]
+
+        print("Top Plate:")
+        print("Plate Type:", plate["plate_type"])
+        print("Plate ID:", plate["plate_id"])
+
+    # Display Plate Stack
+    def display(self):
+        if len(self.stack) == 0:
+            print("Stack is empty!")
+            return
+
+        print("\nPlate Stack:")
+        for i in range(len(self.stack) - 1, -1, -1):
+            plate = self.stack[i]
+            print(
+                "Plate Type:", plate["plate_type"],
+                "| Plate ID:", plate["plate_id"]
+            )
+
+
+# Main Program
+stack = CafeteriaPlateStack()
+
+while True:
+    print("\n--- Cafeteria Plate Stack ---")
+    print("1. Add Plate")
+    print("2. Remove Plate")
+    print("3. View Top Plate")
+    print("4. Display Plate Stack")
+    print("5. Exit")
+
+    choice = int(input("Enter your choice: "))
+
+    if choice == 1:
+        plate_type = input("Enter plate type (Steel/Ceramic): ")
+        plate_id = input("Enter Plate ID: ")
+
+        stack.add_plate(plate_type, plate_id)
+
+    elif choice == 2:
+        stack.remove_plate()
+
+    elif choice == 3:
+        stack.view_top_plate()
+
+    elif choice == 4:
+        stack.display()
+
+    elif choice == 5:
+        print("Program terminated.")
+        break
+
+    else:
+        print("Invalid choice!")
