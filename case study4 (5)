@@ -1,0 +1,73 @@
+class Node:
+    def __init__(self, product_id):
+        self.product_id = product_id
+        self.left = None
+        self.right = None
+
+
+class ProductInventory:
+    def __init__(self):
+        self.root = None
+
+    # Insert product ID into Binary Search Tree
+    def insert(self, product_id):
+        new_node = Node(product_id)
+
+        if self.root is None:
+            self.root = new_node
+            return
+
+        temp = self.root
+
+        while True:
+            if product_id < temp.product_id:
+                if temp.left is None:
+                    temp.left = new_node
+                    return
+                temp = temp.left
+            else:
+                if temp.right is None:
+                    temp.right = new_node
+                    return
+                temp = temp.right
+
+    # Non-recursive Preorder Traversal
+    def preorder(self):
+        if self.root is None:
+            print("Tree is empty.")
+            return
+
+        stack = []
+        stack.append(self.root)
+
+        print("Preorder Traversal:")
+
+        while stack:
+            current = stack.pop()
+
+            # Visit root
+            print(current.product_id, end=" ")
+
+            # Push right first
+            if current.right is not None:
+                stack.append(current.right)
+
+            # Push left second
+            if current.left is not None:
+                stack.append(current.left)
+
+
+# Create Product Inventory
+inventory = ProductInventory()
+
+# Insert Product IDs
+inventory.insert(50)
+inventory.insert(30)
+inventory.insert(70)
+inventory.insert(20)
+inventory.insert(40)
+inventory.insert(60)
+inventory.insert(80)
+
+# Perform non-recursive preorder traversal
+inventory.preorder()
