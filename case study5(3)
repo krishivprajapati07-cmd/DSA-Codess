@@ -1,0 +1,56 @@
+class Node:
+    def __init__(self, registration_no):
+        self.registration_no = registration_no
+        self.left = None
+        self.right = None
+
+
+class HospitalBST:
+    def __init__(self):
+        self.root = None
+
+    # Insert registration number into BST
+    def insert(self, registration_no):
+        new_node = Node(registration_no)
+
+        if self.root is None:
+            self.root = new_node
+            return
+
+        temp = self.root
+
+        while True:
+            if registration_no < temp.registration_no:
+                if temp.left is None:
+                    temp.left = new_node
+                    return
+                temp = temp.left
+            else:
+                if temp.right is None:
+                    temp.right = new_node
+                    return
+                temp = temp.right
+
+    # Recursive Postorder Traversal
+    def postorder(self, root):
+        if root is not None:
+            self.postorder(root.left)
+            self.postorder(root.right)
+            print(root.registration_no, end=" ")
+
+
+# Create Hospital BST
+hospital = HospitalBST()
+
+# Insert patient registration numbers
+hospital.insert(50)
+hospital.insert(30)
+hospital.insert(70)
+hospital.insert(20)
+hospital.insert(40)
+hospital.insert(60)
+hospital.insert(80)
+
+# Display Postorder Traversal
+print("Postorder Traversal:")
+hospital.postorder(hospital.root)
